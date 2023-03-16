@@ -1,7 +1,6 @@
 version: "3.9"
 networks:
   deploy-guide-dev:
-    default: 
       driver: bridge
 services:
   app:
@@ -13,6 +12,8 @@ services:
       - "80:80"
     depends_on:
       - postgres_db
+    networks:
+      - deploy-guide-dev
   postgres_db:
     container_name: postgres
     image: postgres:latest
@@ -22,6 +23,8 @@ services:
       POSTGRES_DB: deploy-guide
     ports:
       - 5431:5432
+    networks:
+      - deploy-guide-dev
     volumes:
       - postgres-data:/var/lib/postgresql/data
   pgadmin:
@@ -30,5 +33,7 @@ services:
       - 5051:5050
     depends_on:
       - postgres_db
+    networks:
+      - deploy-guide-dev
 volumes:
   postgres-data:
