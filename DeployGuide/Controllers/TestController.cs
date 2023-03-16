@@ -1,3 +1,4 @@
+using DeployGuide.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeployGuide.Controllers;
@@ -6,9 +7,31 @@ namespace DeployGuide.Controllers;
 [Route("test")]
 public class TestController: ControllerBase
 {
+    private readonly DataContext _context;
+
+    public TestController(DataContext context)
+    {
+        _context = context;
+    }
+
     [HttpGet]
     public IActionResult Test()
     {
-        return Ok("Test: Ok");
+        var user = _context.Users.FirstOrDefault();
+        return Ok(user);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddUser()
+    {
+        var user = new UserEntity
+        {
+            Name = "Random",
+            Email = "random@mail.ru"
+        };
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+
+        return Ok();
     }
 }
