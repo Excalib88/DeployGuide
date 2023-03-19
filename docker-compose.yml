@@ -1,19 +1,19 @@
 version: "3.9"
 networks:
   deploy-guide-dev:
-      driver: bridge
+    driver: bridge
 services:
-  app:
-    container_name: myapp
+  app: 
+    container_name: deploy-guide
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "80:80"
-    depends_on:
-      - postgres_db
     networks:
       - deploy-guide-dev
+    depends_on:
+      - postgres_db
   postgres_db:
     container_name: postgres
     image: postgres:latest
@@ -22,18 +22,10 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: deploy-guide
     ports:
-      - 5431:5432
+      - "5432:5432"
     networks:
       - deploy-guide-dev
     volumes:
       - postgres-data:/var/lib/postgresql/data
-  pgadmin:
-    image: chorss/docker-pgadmin4
-    ports:
-      - 5051:5050
-    depends_on:
-      - postgres_db
-    networks:
-      - deploy-guide-dev
 volumes:
   postgres-data:
