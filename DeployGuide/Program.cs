@@ -17,11 +17,8 @@ builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(builder.Configur
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("default");
 
