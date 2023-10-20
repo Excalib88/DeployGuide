@@ -7,17 +7,17 @@ namespace DeployGuide.Controllers;
 [Route("test")]
 public class TestController: ControllerBase
 {
-    //private readonly DataContext _context;
+    private readonly DataContext _context;
 
-    // public TestController(DataContext context)
-    // {
-    //     _context = context;
-    // }
+     public TestController(DataContext context)
+     {
+         _context = context;
+     }
 
     [HttpGet]
     public IActionResult Test()
     {
-        //var user = _context.Users.FirstOrDefault();
+        var user = _context.Users.FirstOrDefault();
         return Ok("Hello world!");
     }
 
@@ -29,8 +29,8 @@ public class TestController: ControllerBase
             Name = "Random",
             Email = "random@mail.ru"
         };
-        // await _context.Users.AddAsync(user);
-        // await _context.SaveChangesAsync();
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
 
         return Ok();
     }
