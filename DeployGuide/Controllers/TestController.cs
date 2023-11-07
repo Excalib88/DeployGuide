@@ -18,7 +18,7 @@ public class TestController: ControllerBase
     public IActionResult Test()
     {
         var user = _context.Users.FirstOrDefault();
-        return Ok("Hello world!");
+        return Ok("Hello world!" + $"{user?.Id} {user?.Name} {user?.Email}");
     }
 
     [HttpPost]
